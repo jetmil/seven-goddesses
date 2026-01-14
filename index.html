@@ -1138,6 +1138,197 @@
             font-size: 0.9rem;
         }
 
+        /* Activation Section */
+        .activation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .activation-steps {
+            list-style: none;
+            counter-reset: step;
+        }
+
+        .activation-steps li {
+            counter-increment: step;
+            padding: 15px 0 15px 50px;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .activation-steps li:last-child {
+            border-bottom: none;
+        }
+
+        .activation-steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 15px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--gold), var(--flame-orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #0a0612;
+        }
+
+        .incantation-block {
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--gold);
+            border-radius: 0 16px 16px 0;
+        }
+
+        .incantation-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-style: italic;
+            font-weight: 500;
+            line-height: 2.2;
+            color: var(--gold-light);
+        }
+
+        /* Casting Section */
+        .casting-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+        }
+
+        .casting-block {
+            padding: 40px;
+        }
+
+        .casting-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .casting-step {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .casting-step .step-number {
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            background: linear-gradient(135deg, var(--gold), var(--flame-orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #0a0612;
+        }
+
+        .casting-step .step-content h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-bottom: 8px;
+        }
+
+        .casting-step .step-content p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-dim);
+        }
+
+        /* Incantations Section */
+        .incantations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .incantation-card {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        .incantation-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(212, 165, 116, 0.1);
+        }
+
+        .incantation-herb {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .incantation-verse {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            font-weight: 500;
+            line-height: 2.2;
+            color: var(--text-light);
+        }
+
+        .belt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .belt-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .belt-item:hover {
+            background: rgba(212, 165, 116, 0.1);
+        }
+
+        .belt-position {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--flame-orange);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .belt-verse {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            font-weight: 500;
+            line-height: 2.2;
+            color: var(--gold-light);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             body {
@@ -1225,6 +1416,22 @@
             }
 
             .rituals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .activation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .casting-container {
+                grid-template-columns: 1fr;
+            }
+
+            .incantations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .belt-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1363,8 +1570,9 @@
         <a href="#goddesses" class="nav-link">Богини</a>
         <a href="#colors" class="nav-link">Цвета</a>
         <a href="#weaving" class="nav-link">Плетения</a>
-        <a href="#altar" class="nav-link">Алтарь</a>
+        <a href="#activation" class="nav-link">Активация</a>
         <a href="#herbs" class="nav-link">Травы</a>
+        <a href="#incantations" class="nav-link">Заговоры</a>
         <a href="#rituals" class="nav-link">Ритуалы</a>
     </nav>
 
@@ -2076,10 +2284,164 @@
             </div>
         </section>
 
+        <!-- Activation Practices Section -->
+        <section id="activation">
+            <h2 class="section-title">
+                <span class="section-number">VI</span>
+                Практики Активации Свечей
+            </h2>
+
+            <div class="activation-grid">
+                <div class="glass-card">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 25px;">Базовая активация</h3>
+                    <ol class="activation-steps">
+                        <li>Взять свечу в руки. Почувствовать вес, фактуру.</li>
+                        <li>Закрыть глаза. Три глубоких вдоха.</li>
+                        <li>Визуализировать золотой поток Амарессы, стекающий в руки.</li>
+                        <li>Сформулировать намерение.</li>
+                        <li>Произнести заговор активации.</li>
+                        <li>Выдохнуть в свечу три раза — короткие резкие выдохи.</li>
+                    </ol>
+                    <div class="incantation-block">
+                        <p class="incantation-text">
+                            «Силой Амарессы заряжаю эту свечу.<br>
+                            Цель — [называешь]. Нить заложена.<br>
+                            Когда огонь придёт — работа начнётся.»
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 25px;">Активация через богиню</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.9; margin-bottom: 20px;">
+                        Вместо Амарессы визуализировать поток нужной богини. Произнести её призыв, добавить:
+                    </p>
+                    <div class="incantation-block">
+                        <p class="incantation-text">
+                            «Силой [имя богини] заряжаю эту свечу.<br>
+                            Её огонь — твой огонь.»
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 25px;">Активация на человека</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.9; margin-bottom: 20px;">
+                        Думать о человеке. Попросить Амарессу показать нить его судьбы. Увидеть цвет нити.
+                    </p>
+                    <div class="incantation-block">
+                        <p class="incantation-text">
+                            «Нить судьбы [имя] — войди в эту свечу.<br>
+                            Из архива Земли вплетаю нити [здоровья, защиты...].»
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Casting Section -->
+        <section id="casting">
+            <h2 class="section-title">
+                <span class="section-number">VII</span>
+                Этапы Отливки и Плетения
+            </h2>
+
+            <div class="casting-container">
+                <div class="casting-block glass-card">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); margin-bottom: 30px; text-align: center;">Отливка свечи</h3>
+                    <div class="casting-steps">
+                        <div class="casting-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Подготовка</h4>
+                                <p>Очистить место. Зажечь рабочие свечи. Призвать Амарессу.</p>
+                            </div>
+                        </div>
+                        <div class="casting-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Зарядка фитиля</h4>
+                                <p>Взять в руки, визуализировать нить, произнести заговор.</p>
+                            </div>
+                        </div>
+                        <div class="casting-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Добавление трав</h4>
+                                <p>С заговором для каждой травы.</p>
+                            </div>
+                        </div>
+                        <div class="casting-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Заливка</h4>
+                                <p>«Тело свечи — тело задачи. Воск хранит нить.»</p>
+                            </div>
+                        </div>
+                        <div class="casting-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Запечатывание</h4>
+                                <p>Выдохнуть три раза. Поблагодарить.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="casting-block glass-card">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); margin-bottom: 30px; text-align: center;">Плетение из готовых свечей</h3>
+                    <div class="casting-steps">
+                        <div class="casting-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Выбор свечей</h4>
+                                <p>2–9 штук по задаче и цветам.</p>
+                            </div>
+                        </div>
+                        <div class="casting-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Разогрев</h4>
+                                <p>До мягкости, не до плавления.</p>
+                            </div>
+                        </div>
+                        <div class="casting-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Открытие канала</h4>
+                                <p>Призвать Амарессу и богиню плетения.</p>
+                            </div>
+                        </div>
+                        <div class="casting-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Плетение</h4>
+                                <p>Скрепить верхушки. Плести с намерением на каждый узел.</p>
+                            </div>
+                        </div>
+                        <div class="casting-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Пояса (для громничных)</h4>
+                                <p>Обмотать в трёх местах с заговорами.</p>
+                            </div>
+                        </div>
+                        <div class="casting-step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <h4>Запечатывание</h4>
+                                <p>«Нити сплетены, узлы завязаны. Огонь придёт — всё разрешится.»</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Herbs Section -->
         <section id="herbs">
             <h2 class="section-title">
-                <span class="section-number">VI</span>
+                <span class="section-number">VIII</span>
                 Травы и Соответствия
             </h2>
 
@@ -2210,10 +2572,116 @@
             </div>
         </section>
 
+        <!-- Incantations Section -->
+        <section id="incantations">
+            <h2 class="section-title">
+                <span class="section-number">IX</span>
+                Заговоры для Трав
+            </h2>
+
+            <div class="incantations-grid">
+                <div class="incantation-card">
+                    <h3 class="incantation-herb">Полынь</h3>
+                    <p class="incantation-verse">
+                        «Полынь-трава, горькая сила,<br>
+                        Очисти путь, открой ворота,<br>
+                        Что тёмное — выжги, что светлое — усиль.»
+                    </p>
+                </div>
+
+                <div class="incantation-card">
+                    <h3 class="incantation-herb">Зверобой</h3>
+                    <p class="incantation-verse">
+                        «Зверобой — солнце в траве,<br>
+                        Свети во тьме, гони беду,<br>
+                        Защити от зла, дай силу дня.»
+                    </p>
+                </div>
+
+                <div class="incantation-card">
+                    <h3 class="incantation-herb">Крапива</h3>
+                    <p class="incantation-verse">
+                        «Крапива жгучая, воин зелёный,<br>
+                        Дай мне силу, сожги страх,<br>
+                        Кто тронет — обожжётся.»
+                    </p>
+                </div>
+
+                <div class="incantation-card">
+                    <h3 class="incantation-herb">Ромашка</h3>
+                    <p class="incantation-verse">
+                        «Ромашка белая, глаз солнца,<br>
+                        Принеси мир в дом, покой в сердце,<br>
+                        Детей защити, семью сохрани.»
+                    </p>
+                </div>
+
+                <div class="incantation-card">
+                    <h3 class="incantation-herb">Шалфей</h3>
+                    <p class="incantation-verse">
+                        «Шалфей мудрый, трава знания,<br>
+                        Очисти ум, открой понимание,<br>
+                        Что скрыто — яви, что сложно — упрости.»
+                    </p>
+                </div>
+
+                <div class="incantation-card">
+                    <h3 class="incantation-herb">Базилик</h3>
+                    <p class="incantation-verse">
+                        «Базилик царский, трава изобилия,<br>
+                        Наполни жизнь, открой потоки,<br>
+                        Деньги текут, стол полон.»
+                    </p>
+                </div>
+
+                <div class="incantation-card">
+                    <h3 class="incantation-herb">Можжевельник</h3>
+                    <p class="incantation-verse">
+                        «Можжевельник, страж границ,<br>
+                        Очисти место, закрой двери злу,<br>
+                        Предки слышат, предки помогают.»
+                    </p>
+                </div>
+            </div>
+
+            <div class="belt-incantations glass-card" style="margin-top: 60px;">
+                <h3 style="font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); margin-bottom: 35px; text-align: center;">Заговоры для поясов громничной свечи</h3>
+
+                <div class="belt-grid">
+                    <div class="belt-item">
+                        <div class="belt-position">Нижний пояс</div>
+                        <p class="belt-verse">
+                            «Корни глубоки, предки сильны.<br>
+                            Их сила — моя сила.<br>
+                            Пояс прошлого — держит, питает.»
+                        </p>
+                    </div>
+
+                    <div class="belt-item">
+                        <div class="belt-position">Средний пояс</div>
+                        <p class="belt-verse">
+                            «Здесь и сейчас — я стою крепко.<br>
+                            Моя жизнь — мой огонь.<br>
+                            Пояс настоящего — защищает, ведёт.»
+                        </p>
+                    </div>
+
+                    <div class="belt-item">
+                        <div class="belt-position">Верхний пояс</div>
+                        <p class="belt-verse">
+                            «Впереди — свет, за мной — сила.<br>
+                            Дети будут крепче.<br>
+                            Пояс будущего — открывает, благословляет.»
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Rituals Section -->
         <section id="rituals">
             <h2 class="section-title">
-                <span class="section-number">VII</span>
+                <span class="section-number">X</span>
                 Ритуалы по Проблемам
             </h2>
 
