@@ -137,16 +137,35 @@
             border-radius: 0 12px 12px 0;
         }
 
-        .diagram {
-            background: rgba(0,0,0,0.3);
-            padding: 20px;
+        .diagram-image {
+            display: block;
+            max-width: 100%;
+            width: 300px;
+            height: auto;
+            margin: 15px auto;
             border-radius: 12px;
-            font-family: monospace;
-            white-space: pre;
-            overflow-x: auto;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            margin: 15px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .geometry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .geometry-item {
+            text-align: center;
+        }
+
+        .geometry-item h4 {
+            color: var(--gold);
+            margin: 10px 0 5px;
+        }
+
+        .geometry-item p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
         }
 
         table {
@@ -306,7 +325,8 @@
             body { font-size: 17px; }
             .section { padding: 25px; }
             .toc ul { column-count: 1; }
-            .diagram { font-size: 0.75rem; }
+            .geometry-grid { grid-template-columns: 1fr; }
+            .diagram-image { width: 250px; }
             table { font-size: 0.85rem; }
 
             .menu-toggle { display: flex; }
@@ -677,17 +697,7 @@
             <h2>Геометрия Алтаря</h2>
 
             <h3>Основные Позиции</h3>
-            <div class="diagram">
-            СЕВЕР (защита, Громничная)
-                    ★
-
-ЗАПАД                           ВОСТОК
-(отпускание)                    (начало)
-    ◐           ЦЕНТР              ◑
-                (главная)
-
-            ЮГ (практик)
-                ▼</div>
+            <img src="images/compass.png" alt="Компас позиций алтаря" class="diagram-image">
 
             <h3>Правила Расположения</h3>
             <ul>
@@ -699,37 +709,28 @@
             </ul>
 
             <h3>Геометрические Фигуры</h3>
-            <h4>Треугольник (3 свечи)</h4>
-            <div class="diagram">
-        ★
-      /   \
-    ◐ ─── ◑</div>
-            <p>Вершина вверх — огонь, активация. Вершина вниз — вода, погружение.</p>
-
-            <h4>Квадрат (4 свечи)</h4>
-            <div class="diagram">
-    ★ ─── ◑
-    │     │
-    ◐ ─── ◎</div>
-            <p>Стабильность, защита, дом.</p>
-
-            <h4>Пентаграмма (5 свечей)</h4>
-            <div class="diagram">
-        ★
-      / ╲ \
-    ◐     ◑
-     \   /
-    ◎ ─ ◎</div>
-            <p>Человек, микрокосм, защита.</p>
-
-            <h4>Круг с Центром (7+ свечей)</h4>
-            <div class="diagram">
-    ★   ◑   ★
-      \ │ /
-    ◐ ─ ⊗ ─ ◐
-      / │ \
-    ★   ◑   ★</div>
-            <p>Полнота, завершённость, сообщество.</p>
+            <div class="geometry-grid">
+                <div class="geometry-item">
+                    <img src="images/geo-1.png" alt="Треугольник" class="diagram-image">
+                    <h4>Треугольник (3 свечи)</h4>
+                    <p>Вершина вверх — огонь, активация. Вершина вниз — вода, погружение.</p>
+                </div>
+                <div class="geometry-item">
+                    <img src="images/geo-2.png" alt="Квадрат" class="diagram-image">
+                    <h4>Квадрат (4 свечи)</h4>
+                    <p>Стабильность, защита, дом.</p>
+                </div>
+                <div class="geometry-item">
+                    <img src="images/geo-3.png" alt="Пентаграмма" class="diagram-image">
+                    <h4>Пентаграмма (5 свечей)</h4>
+                    <p>Человек, микрокосм, защита.</p>
+                </div>
+                <div class="geometry-item">
+                    <img src="images/geo-4.png" alt="Круг" class="diagram-image">
+                    <h4>Круг с Центром (7+ свечей)</h4>
+                    <p>Полнота, завершённость, сообщество.</p>
+                </div>
+            </div>
         </section>
 
         <!-- ПОРЯДОК ЗАЖЖЕНИЯ -->
