@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Семь Богинь Священного Огня</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel:wght@400;600;700&display=swap');
+
+        :root {
+            --gold: #d4a574;
+            --gold-light: #f0d9b5;
+            --gold-dark: #8b6914;
+            --flame-orange: #ff6b35;
+            --flame-red: #c41e3a;
+            --deep-purple: #1a0a2e;
+            --mystic-blue: #0f1b3d;
+            --glass-white: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-light: #e8e0d5;
+            --text-dim: #9a8f85;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            background: linear-gradient(135deg, #0a0612 0%, #1a0a2e 25%, #0f1b3d 50%, #1a0a2e 75%, #0a0612 100%);
+            background-attachment: fixed;
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        /* Fire Particles Canvas */
+        #fireCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        /* Animated Background Orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: orbFloat 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--flame-orange) 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--flame-red) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.1); }
+            50% { transform: translate(-30px, 50px) scale(0.95); }
+            75% { transform: translate(-50px, -20px) scale(1.05); }
+        }
+
+        /* Main Content Container */
+        .content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--flame-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 60px rgba(212, 165, 116, 0.5);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes titleGlow {
+            from { filter: drop-shadow(0 0 20px rgba(212, 165, 116, 0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(255, 107, 53, 0.8)); }
+        }
+
+        .hero-subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--gold);
+            letter-spacing: 0.3em;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .hero-stars {
+            font-size: 2rem;
+            color: var(--gold);
+            margin: 30px 0;
+            animation: starPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes starPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .hero-description {
+            max-width: 800px;
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            line-height: 2;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.1s forwards;
+        }
+
+        .tag {
+            padding: 10px 25px;
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--gold-light);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(212, 165, 116, 0.2);
+            border-color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: scrollDot 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        @keyframes scrollDot {
+            0%, 100% { top: 8px; opacity: 1; }
+            50% { top: 25px; opacity: 0.3; }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            background: rgba(10, 6, 18, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .nav.visible {
+            transform: translateY(0);
+        }
+
+        .nav-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--flame-orange));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 100px 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-number {
+            display: block;
+            font-size: 0.6em;
+            color: var(--flame-orange);
+            -webkit-text-fill-color: var(--flame-orange);
+            margin-bottom: 10px;
+            letter-spacing: 0.3em;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(212, 165, 116, 0.1);
+        }
+
+        /* Goddess Cards */
+        .goddess-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .goddess-card {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 0;
+            backdrop-filter: blur(20px);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .goddess-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--goddess-color, var(--gold));
+            transition: height 0.3s ease;
+        }
+
+        .goddess-card:hover::before {
+            height: 8px;
+        }
+
+        .goddess-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 60px var(--goddess-glow, rgba(212, 165, 116, 0.2));
+        }
+
+        .goddess-header {
+            padding: 30px 30px 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .goddess-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--goddess-color, var(--gold));
+            margin-bottom: 5px;
+        }
+
+        .goddess-title {
+            font-size: 1rem;
+            color: var(--text-dim);
+            font-style: italic;
+        }
+
+        .goddess-body {
+            padding: 25px 30px;
+        }
+
+        .goddess-domain {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .goddess-domain p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+        }
+
+        .goddess-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .meta-item {
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .meta-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+            margin-bottom: 5px;
+        }
+
+        .meta-value {
+            font-size: 0.95rem;
+            color: var(--goddess-color, var(--gold-light));
+        }
+
+        /* Expand Button */
+        .expand-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(255, 107, 53, 0.1));
+            border: none;
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .expand-btn:hover {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.2), rgba(255, 107, 53, 0.2));
+        }
+
+        .expand-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .goddess-card.expanded .expand-btn svg {
+            transform: rotate(180deg);
+        }
+
+        .goddess-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .goddess-card.expanded .goddess-details {
+            max-height: 2000px;
+        }
+
+        .details-content {
+            padding: 30px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .detail-section {
+            margin-bottom: 25px;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-title::before {
+            content: '';
+            width: 20px;
+            height: 2px;
+            background: var(--goddess-color, var(--gold));
+        }
+
+        .prayer-text {
+            font-style: italic;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--goddess-color, var(--gold));
+            border-radius: 0 12px 12px 0;
+            line-height: 2;
+        }
+
+        .meditation-steps {
+            list-style: none;
+        }
+
+        .meditation-steps li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .meditation-steps li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 18px;
+            width: 8px;
+            height: 8px;
+            background: var(--goddess-color, var(--gold));
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--goddess-color, var(--gold));
+        }
+
+        .use-cases {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .use-case {
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            transition: all 0.3s ease;
+        }
+
+        .use-case:hover {
+            background: var(--goddess-color, var(--gold));
+            color: #0a0612;
+        }
+
+        /* Colors Section */
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .color-card {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .color-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .color-card:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .color-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .color-power {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            position: relative;
+            z-index: 1;
+        }
+
+        .color-goddess {
+            font-size: 0.8rem;
+            color: var(--gold);
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Weaving Section */
+        .weaving-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .weaving-card {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+        }
+
+        .weaving-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .weaving-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold), var(--flame-orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0a0612;
+            margin-bottom: 20px;
+        }
+
+        .weaving-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--gold-light);
+            margin-bottom: 10px;
+        }
+
+        .weaving-desc {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        /* Herbs Section */
+        .herbs-goddess {
+            margin-bottom: 50px;
+        }
+
+        .herbs-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .herbs-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .herb-item {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .herb-item:hover {
+            background: rgba(212, 165, 116, 0.15);
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .herb-name {
+            font-weight: 600;
+            color: var(--gold-light);
+            margin-bottom: 5px;
+        }
+
+        .herb-power {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* Rituals Section */
+        .rituals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .ritual-card {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+        }
+
+        .ritual-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .ritual-header {
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(255, 107, 53, 0.05));
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .ritual-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .ritual-goddess {
+            font-size: 0.9rem;
+            color: var(--flame-orange);
+        }
+
+        .ritual-body {
+            padding: 25px;
+        }
+
+        .ritual-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .ritual-label {
+            min-width: 80px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+        }
+
+        .ritual-value {
+            color: var(--text-light);
+        }
+
+        .ritual-text {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--glass-border);
+            font-style: italic;
+            line-height: 1.9;
+        }
+
+        /* Altar Section */
+        .altar-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .altar-diagram {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            margin-bottom: 40px;
+        }
+
+        .altar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 20px;
+            aspect-ratio: 1;
+        }
+
+        .altar-position {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .altar-position:hover {
+            background: rgba(212, 165, 116, 0.1);
+            transform: scale(1.05);
+        }
+
+        .altar-position.center {
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.2) 0%, transparent 70%);
+            animation: centerGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes centerGlow {
+            from { box-shadow: 0 0 20px rgba(212, 165, 116, 0.3); }
+            to { box-shadow: 0 0 40px rgba(255, 107, 53, 0.5); }
+        }
+
+        .altar-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .altar-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--gold);
+        }
+
+        .altar-order {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .order-item:hover {
+            background: rgba(212, 165, 116, 0.1);
+            border-color: var(--gold);
+        }
+
+        .order-num {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--gold), var(--flame-orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #0a0612;
+            flex-shrink: 0;
+        }
+
+        .order-text {
+            font-size: 0.95rem;
+        }
+
+        /* Conclusion */
+        .conclusion {
+            text-align: center;
+            padding: 80px 40px;
+        }
+
+        .principles {
+            max-width: 600px;
+            margin: 0 auto 50px;
+        }
+
+        .principle {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            transition: color 0.3s ease;
+        }
+
+        .principle:hover {
+            color: var(--gold);
+        }
+
+        .principle:last-child {
+            border-bottom: none;
+        }
+
+        .final-blessing {
+            margin-top: 60px;
+            padding: 40px;
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+        }
+
+        .blessing-text {
+            font-size: 1.3rem;
+            line-height: 2.2;
+            color: var(--gold-light);
+            font-style: italic;
+        }
+
+        .blessing-signature {
+            margin-top: 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--flame-orange);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 60px;
+        }
+
+        footer p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                flex-wrap: wrap;
+                padding: 15px 20px;
+                gap: 15px;
+            }
+
+            .goddess-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .goddess-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .altar-grid {
+                gap: 10px;
+            }
+
+            .altar-position {
+                padding: 10px;
+            }
+
+            .altar-name {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--deep-purple);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-dark);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold);
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(212, 165, 116, 0.3);
+            color: var(--gold-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Orbs -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <!-- Fire Particles Canvas -->
+    <canvas id="fireCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#goddesses" class="nav-link">Богини</a>
+        <a href="#colors" class="nav-link">Цвета</a>
+        <a href="#weaving" class="nav-link">Плетения</a>
+        <a href="#altar" class="nav-link">Алтарь</a>
+        <a href="#herbs" class="nav-link">Травы</a>
+        <a href="#rituals" class="nav-link">Ритуалы</a>
+    </nav>
+
+    <div class="content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title">Семь Богинь<br>Священного Огня</h1>
+            <p class="hero-stars">&#10022; &#10022; &#10022;</p>
+            <p class="hero-subtitle">Полное руководство по работе с энергиями свечной магии</p>
+            <p class="hero-description">
+                Система Семи Богинь Священного Огня — целостная практика работы с энергиями огня через свечную магию.
+                В её основе — понимание того, что огонь во всех проявлениях несёт живые божественные силы.
+            </p>
+            <div class="hero-tags">
+                <span class="tag">Медитации</span>
+                <span class="tag">Призывы</span>
+                <span class="tag">Плетения</span>
+                <span class="tag">Ритуалы</span>
+                <span class="tag">Травы</span>
+                <span class="tag">Заговоры</span>
+            </div>
+            <div class="scroll-indicator">
+                <span></span>
+            </div>
+        </section>
+
+        <!-- Introduction -->
+        <section id="intro" class="glass-card">
+            <h2 class="section-title">
+                <span class="section-number">I</span>
+                Введение в Систему
+            </h2>
+            <p style="font-size: 1.15rem; line-height: 2; margin-bottom: 30px;">
+                Каждая из семи богинь отвечает за определённый аспект огненной стихии.
+                Работая с ними через свечи, плетения и ритуалы, практик получает доступ к древним потокам силы.
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+                <div style="padding: 25px; background: rgba(0,0,0,0.2); border-radius: 16px;">
+                    <h3 style="color: var(--gold); margin-bottom: 15px; font-family: 'Cinzel', serif;">Проводимость</h3>
+                    <p style="color: var(--text-dim);">Практик не управляет богинями — он открывает себя как канал</p>
+                </div>
+                <div style="padding: 25px; background: rgba(0,0,0,0.2); border-radius: 16px;">
+                    <h3 style="color: var(--gold); margin-bottom: 15px; font-family: 'Cinzel', serif;">Материя</h3>
+                    <p style="color: var(--text-dim);">Воск, фитиль, травы, цвет — становятся телом божественной программы</p>
+                </div>
+                <div style="padding: 25px; background: rgba(0,0,0,0.2); border-radius: 16px;">
+                    <h3 style="color: var(--gold); margin-bottom: 15px; font-family: 'Cinzel', serif;">Узлы</h3>
+                    <p style="color: var(--text-dim);">В местах переплетения образуются точки схождения сил</p>
+                </div>
+                <div style="padding: 25px; background: rgba(0,0,0,0.2); border-radius: 16px;">
+                    <h3 style="color: var(--gold); margin-bottom: 15px; font-family: 'Cinzel', serif;">Циклы</h3>
+                    <p style="color: var(--text-dim);">Работа связана с лунными фазами, временем суток, годовым кругом</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Goddesses Section -->
+        <section id="goddesses">
+            <h2 class="section-title">
+                <span class="section-number">II</span>
+                Семь Богинь Священного Огня
+            </h2>
+
+            <div class="goddess-grid">
+                <!-- Amaressa -->
+                <div class="goddess-card" style="--goddess-color: #d4a574; --goddess-glow: rgba(212, 165, 116, 0.3);">
+                    <div class="goddess-header">
+                        <h3 class="goddess-name">Амаресса</h3>
+                        <p class="goddess-title">Бессмертное Пламя • Ткачиха Судеб • Хранительница Огня</p>
+                    </div>
+                    <div class="goddess-body">
+                        <div class="goddess-domain">
+                            <p>Центральная богиня. Та, что достаёт из информационного поля Земли нить судьбы человека и вплетает её в фитиль свечи. Соединяет индивидуальную судьбу с проверенными паттернами удачи, здоровья, силы.</p>
+                        </div>
+                        <div class="goddess-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">Огонь</div>
+                                <div class="meta-value">Пламя свечи в чистейшей форме</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Качества</div>
+                                <div class="meta-value">Координация, вплетение, трансформация</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Цвета</div>
+                                <div class="meta-value">Золотой, белый</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Положение</div>
+                                <div class="meta-value">Центр алтаря</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="expand-btn" onclick="toggleGoddess(this)">
+                        Призыв и медитация
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="goddess-details">
+                        <div class="details-content">
+                            <div class="detail-section">
+                                <h4 class="detail-title">Призыв Амарессы</h4>
+                                <p class="prayer-text">
+                                    «Амаресса, Ткачиха Судеб, Хранительница Огня,<br>
+                                    Та, что видит нити в глубинах Земли,<br>
+                                    Та, что знает узлы времени,<br>
+                                    Приди. Открой мне свой поток.<br>
+                                    Я готов(а) быть проводником твоей работы.»
+                                </p>
+                            </div>
+                            <div class="detail-section">
+                                <h4 class="detail-title">Медитация посвящения</h4>
+                                <ul class="meditation-steps">
+                                    <li>Зажги свечу. Сядь перед ней, спина прямая. Дыши глубоко — 21 вдох-выдох.</li>
+                                    <li>Представь дверь. Старая, деревянная. На ней выжжен знак — три переплетённые нити. Произнеси призыв. Толкни дверь.</li>
+                                    <li>За дверью — пещера. Стены золотистые, светятся. Пахнет воском, мёдом, дымом. В центре — очаг с живым огнём.</li>
+                                    <li>Из глубины выходит Она. Скажи о намерении учиться, служить, проводить. Попроси благословения.</li>
+                                    <li>Если богиня согласна, золотая нить войдёт в тебя через темя, стечёт по позвоночнику в руки.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hefaella -->
+                <div class="goddess-card" style="--goddess-color: #c41e3a; --goddess-glow: rgba(196, 30, 58, 0.3);">
+                    <div class="goddess-header">
+                        <h3 class="goddess-name">Хефаэлла</h3>
+                        <p class="goddess-title">Госпожа Горна • Богиня металлургии и ковки</p>
+                    </div>
+                    <div class="goddess-body">
+                        <div class="goddess-domain">
+                            <p>Превращает грубую руду в чистый металл, сырой характер — в закалённую волю. Её огонь требовательный. Выжигает слабость, плавит сопротивление, куёт новую форму.</p>
+                        </div>
+                        <div class="goddess-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">Огонь</div>
+                                <div class="meta-value">Горн, плавильная печь, сварка</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Качества</div>
+                                <div class="meta-value">Точность, дисциплина, инновации</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Цвета</div>
+                                <div class="meta-value">Красный, чёрный, оранжевый</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Плетение</div>
+                                <div class="meta-value">Тугая скрутка из 2 свечей</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="expand-btn" onclick="toggleGoddess(this)">
+                        Призыв и медитация
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="goddess-details">
+                        <div class="details-content">
+                            <div class="detail-section">
+                                <h4 class="detail-title">Призыв Хефаэллы</h4>
+                                <p class="prayer-text">
+                                    «Хефаэлла, Госпожа Горна, Мать Металла,<br>
+                                    Та, что знает жар преображения,<br>
+                                    Та, что куёт судьбы на наковальне воли,<br>
+                                    Приди. Дай мне твёрдость.<br>
+                                    Выжги слабость, выкуй силу.<br>
+                                    Я готов(а) к огню трансформации.»
+                                </p>
+                            </div>
+                            <div class="detail-section">
+                                <h4 class="detail-title">Когда обращаться</h4>
+                                <div class="use-cases">
+                                    <span class="use-case">Сила воли</span>
+                                    <span class="use-case">Запуск бизнеса</span>
+                                    <span class="use-case">Преодоление препятствий</span>
+                                    <span class="use-case">Технологии</span>
+                                    <span class="use-case">Избавление от слабостей</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estiora -->
+                <div class="goddess-card" style="--goddess-color: #e07020; --goddess-glow: rgba(224, 112, 32, 0.3);">
+                    <div class="goddess-header">
+                        <h3 class="goddess-name">Эстиора</h3>
+                        <p class="goddess-title">Хранительница Очага • Богиня домашнего огня</p>
+                    </div>
+                    <div class="goddess-body">
+                        <div class="goddess-domain">
+                            <p>Душа дома. Её огонь согревает, но не обжигает. Хранит мир в семье, защищает порог, наполняет жилище любовью. Покровительница уюта и защиты жилища.</p>
+                        </div>
+                        <div class="goddess-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">Огонь</div>
+                                <div class="meta-value">Камин, печь, плита</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Качества</div>
+                                <div class="meta-value">Уют, защита дома, примирение</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Цвета</div>
+                                <div class="meta-value">Оранжевый, коричневый, белый</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Плетение</div>
+                                <div class="meta-value">Коса из 3 свечей</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="expand-btn" onclick="toggleGoddess(this)">
+                        Призыв и медитация
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="goddess-details">
+                        <div class="details-content">
+                            <div class="detail-section">
+                                <h4 class="detail-title">Призыв Эстиоры</h4>
+                                <p class="prayer-text">
+                                    «Эстиора, Хранительница Очага, Мать Дома,<br>
+                                    Та, что греет без обжигания,<br>
+                                    Та, что стоит на страже порога,<br>
+                                    Приди. Наполни этот дом теплом.<br>
+                                    Защити живущих, примири враждующих.<br>
+                                    Да будет здесь мир и свет.»
+                                </p>
+                            </div>
+                            <div class="detail-section">
+                                <h4 class="detail-title">Когда обращаться</h4>
+                                <div class="use-cases">
+                                    <span class="use-case">Защита дома</span>
+                                    <span class="use-case">Примирение</span>
+                                    <span class="use-case">Переезд</span>
+                                    <span class="use-case">Создание уюта</span>
+                                    <span class="use-case">Работа с родом</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Luminara -->
+                <div class="goddess-card" style="--goddess-color: #f0c040; --goddess-glow: rgba(240, 192, 64, 0.3);">
+                    <div class="goddess-header">
+                        <h3 class="goddess-name">Люминара</h3>
+                        <p class="goddess-title">Несущая Свет • Богиня радости и праздников</p>
+                    </div>
+                    <div class="goddess-body">
+                        <div class="goddess-domain">
+                            <p>Чистый свет без тени. Освещает тьму, разгоняет уныние, приносит праздник. Её огонь — для сияния, веселья и публичности.</p>
+                        </div>
+                        <div class="goddess-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">Огонь</div>
+                                <div class="meta-value">Праздничные свечи, гирлянды</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Качества</div>
+                                <div class="meta-value">Веселье, яркость, удача</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Цвета</div>
+                                <div class="meta-value">Жёлтый, белый, золотой</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Плетение</div>
+                                <div class="meta-value">Спираль из 4–5 свечей</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="expand-btn" onclick="toggleGoddess(this)">
+                        Призыв и медитация
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="goddess-details">
+                        <div class="details-content">
+                            <div class="detail-section">
+                                <h4 class="detail-title">Призыв Люминары</h4>
+                                <p class="prayer-text">
+                                    «Люминара, Несущая Свет, Дочь Сияния,<br>
+                                    Та, что разгоняет тьму смехом,<br>
+                                    Та, что приносит праздник в серый день,<br>
+                                    Приди. Озари мою жизнь.<br>
+                                    Принеси радость, удачу, яркость.<br>
+                                    Да будет свет!»
+                                </p>
+                            </div>
+                            <div class="detail-section">
+                                <h4 class="detail-title">Когда обращаться</h4>
+                                <div class="use-cases">
+                                    <span class="use-case">Выход из уныния</span>
+                                    <span class="use-case">Презентации</span>
+                                    <span class="use-case">Привлечение удачи</span>
+                                    <span class="use-case">Праздники</span>
+                                    <span class="use-case">Известность</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sofiel -->
+                <div class="goddess-card" style="--goddess-color: #4080c0; --goddess-glow: rgba(64, 128, 192, 0.3);">
+                    <div class="goddess-header">
+                        <h3 class="goddess-name">Софиэль</h3>
+                        <p class="goddess-title">Пламя Разума • Богиня мудрости и озарения</p>
+                    </div>
+                    <div class="goddess-body">
+                        <div class="goddess-domain">
+                            <p>Огонь в уме. Приносит озарения, прорывы понимания, ясность. Её свет — ментальный: вспышка «эврики». Покровительница познания.</p>
+                        </div>
+                        <div class="goddess-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">Огонь</div>
+                                <div class="meta-value">Лампа учёного, свеча писателя</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Качества</div>
+                                <div class="meta-value">Ясность, озарение, прорывы</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Цвета</div>
+                                <div class="meta-value">Синий, фиолетовый, белый</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Плетение</div>
+                                <div class="meta-value">Двойная коса из 6 свечей</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="expand-btn" onclick="toggleGoddess(this)">
+                        Призыв и медитация
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="goddess-details">
+                        <div class="details-content">
+                            <div class="detail-section">
+                                <h4 class="detail-title">Призыв Софиэль</h4>
+                                <p class="prayer-text">
+                                    «Софиэль, Пламя Разума, Мать Мудрости,<br>
+                                    Та, что освещает пути познания,<br>
+                                    Та, что дарует озарение ищущим,<br>
+                                    Приди. Зажги огонь в моём уме.<br>
+                                    Рассей туман, открой понимание.<br>
+                                    Да будет мысль ясна как пламя свечи.»
+                                </p>
+                            </div>
+                            <div class="detail-section">
+                                <h4 class="detail-title">Когда обращаться</h4>
+                                <div class="use-cases">
+                                    <span class="use-case">Учёба, экзамены</span>
+                                    <span class="use-case">Озарение</span>
+                                    <span class="use-case">Творчество</span>
+                                    <span class="use-case">Поиск ответов</span>
+                                    <span class="use-case">Медитация</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nurina -->
+                <div class="goddess-card" style="--goddess-color: #40a040; --goddess-glow: rgba(64, 160, 64, 0.3);">
+                    <div class="goddess-header">
+                        <h3 class="goddess-name">Нурина</h3>
+                        <p class="goddess-title">Госпожа Изобилия • Богиня кулинарии и щедрости</p>
+                    </div>
+                    <div class="goddess-body">
+                        <div class="goddess-domain">
+                            <p>Огонь, превращающий сырое в готовое. Её забота — насыщение тела и души через красоту подачи, гармонию вкусов, щедрость стола.</p>
+                        </div>
+                        <div class="goddess-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">Огонь</div>
+                                <div class="meta-value">Плита, духовка, гриль</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Качества</div>
+                                <div class="meta-value">Забота, алхимия вкуса, щедрость</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Цвета</div>
+                                <div class="meta-value">Зелёный, оранжевый, коричневый</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Плетение</div>
+                                <div class="meta-value">Расцеп из 4 свечей</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="expand-btn" onclick="toggleGoddess(this)">
+                        Призыв и медитация
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="goddess-details">
+                        <div class="details-content">
+                            <div class="detail-section">
+                                <h4 class="detail-title">Призыв Нурины</h4>
+                                <p class="prayer-text">
+                                    «Нурина, Госпожа Изобилия, Мать Пиршества,<br>
+                                    Та, что превращает простое в изысканное,<br>
+                                    Та, что насыщает тело и душу,<br>
+                                    Приди. Наполни мой стол.<br>
+                                    Дай изобилие, вкус и радость еды.<br>
+                                    Да будет стол мой щедр и красив.»
+                                </p>
+                            </div>
+                            <div class="detail-section">
+                                <h4 class="detail-title">Когда обращаться</h4>
+                                <div class="use-cases">
+                                    <span class="use-case">Привлечение достатка</span>
+                                    <span class="use-case">Благословение еды</span>
+                                    <span class="use-case">Застолья</span>
+                                    <span class="use-case">Отношения</span>
+                                    <span class="use-case">Бизнес питания</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Morigena -->
+                <div class="goddess-card" style="--goddess-color: #8040a0; --goddess-glow: rgba(128, 64, 160, 0.3);">
+                    <div class="goddess-header">
+                        <h3 class="goddess-name">Моригена</h3>
+                        <p class="goddess-title">Хозяйка Перехода • Богиня трансформации</p>
+                    </div>
+                    <div class="goddess-body">
+                        <div class="goddess-domain">
+                            <p>Огонь, который завершает. Правит крематорием и компостом, сжиганием старого. Превращает мёртвое в питание для живого. Спокойная и величественная.</p>
+                        </div>
+                        <div class="goddess-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">Огонь</div>
+                                <div class="meta-value">Погребальный костёр</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Качества</div>
+                                <div class="meta-value">Отпускание, завершение</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Цвета</div>
+                                <div class="meta-value">Чёрный, белый, фиолетовый</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Плетение</div>
+                                <div class="meta-value">Громничное с 3 поясами</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="expand-btn" onclick="toggleGoddess(this)">
+                        Призыв и медитация
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="goddess-details">
+                        <div class="details-content">
+                            <div class="detail-section">
+                                <h4 class="detail-title">Призыв Моригены</h4>
+                                <p class="prayer-text">
+                                    «Моригена, Хозяйка Перехода, Мать Пепла,<br>
+                                    Та, что завершает то, что должно завершиться,<br>
+                                    Та, что из праха взращивает новое,<br>
+                                    Приди. Помоги мне отпустить.<br>
+                                    Сожги то, что мертво, освободи живое.<br>
+                                    Да будет завершение началом.»
+                                </p>
+                            </div>
+                            <div class="detail-section">
+                                <h4 class="detail-title">Когда обращаться</h4>
+                                <div class="use-cases">
+                                    <span class="use-case">Завершение этапов</span>
+                                    <span class="use-case">Работа с горем</span>
+                                    <span class="use-case">Отпускание обид</span>
+                                    <span class="use-case">Расхламление</span>
+                                    <span class="use-case">Родовые чистки</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Colors Section -->
+        <section id="colors">
+            <h2 class="section-title">
+                <span class="section-number">III</span>
+                Десять Цветов Свечей
+            </h2>
+
+            <div class="colors-grid">
+                <div class="color-card" style="--card-color: #c41e3a;">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #c41e3a, #8b0000);"></div>
+                    <div class="color-name" style="color: #c41e3a;">Красный</div>
+                    <div class="color-power">Страсть, сила, действие, воля</div>
+                    <div class="color-goddess">Хефаэлла</div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #ff6b35, #e07020);"></div>
+                    <div class="color-name" style="color: #ff6b35;">Оранжевый</div>
+                    <div class="color-power">Тепло, радость, энергия</div>
+                    <div class="color-goddess">Эстиора, Нурина</div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #f0c040, #d4a574);"></div>
+                    <div class="color-name" style="color: #f0c040;">Жёлтый</div>
+                    <div class="color-power">Свет, оптимизм, удача</div>
+                    <div class="color-goddess">Люминара</div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #40a040, #2d7d2d);"></div>
+                    <div class="color-name" style="color: #40a040;">Зелёный</div>
+                    <div class="color-power">Рост, здоровье, деньги</div>
+                    <div class="color-goddess">Нурина</div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #60a0c0, #4080a0);"></div>
+                    <div class="color-name" style="color: #60a0c0;">Голубой</div>
+                    <div class="color-power">Покой, общение, ясность</div>
+                    <div class="color-goddess">Софиэль</div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #4080c0, #2060a0);"></div>
+                    <div class="color-name" style="color: #4080c0;">Синий</div>
+                    <div class="color-power">Глубина, мудрость, защита</div>
+                    <div class="color-goddess">Софиэль</div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #8040a0, #602080);"></div>
+                    <div class="color-name" style="color: #8040a0;">Фиолетовый</div>
+                    <div class="color-power">Духовность, трансформация</div>
+                    <div class="color-goddess">Софиэль, Моригена</div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #8b6914, #5c4a1a);"></div>
+                    <div class="color-name" style="color: #8b6914;">Коричневый</div>
+                    <div class="color-power">Земля, стабильность, дом</div>
+                    <div class="color-goddess">Эстиора</div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #2a2a2a, #0a0a0a);"></div>
+                    <div class="color-name" style="color: #666;">Чёрный</div>
+                    <div class="color-power">Защита, отвод, завершение</div>
+                    <div class="color-goddess">Моригена, Хефаэлла</div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #ffffff, #e0e0e0);"></div>
+                    <div class="color-name" style="color: #ccc;">Белый</div>
+                    <div class="color-power">Чистота, универсальность</div>
+                    <div class="color-goddess">Все, особенно Амаресса</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weaving Section -->
+        <section id="weaving">
+            <h2 class="section-title">
+                <span class="section-number">IV</span>
+                Семь Типов Плетения
+            </h2>
+
+            <div class="weaving-cards">
+                <div class="weaving-card">
+                    <div class="weaving-number">1</div>
+                    <h3 class="weaving-name">Одинарная свеча</h3>
+                    <p class="weaving-desc">Прямой канал одной богини. Простая работа. Цвет определяет богиню.</p>
+                </div>
+
+                <div class="weaving-card">
+                    <div class="weaving-number">2</div>
+                    <h3 class="weaving-name">Скрутка</h3>
+                    <p class="weaving-desc">Соединение двух сил. Тугая — для давления (Хефаэлла). Мягкая — для гармонизации. По часовой — привлечение, против — отпускание.</p>
+                </div>
+
+                <div class="weaving-card">
+                    <div class="weaving-number">3</div>
+                    <h3 class="weaving-name">Коса классическая</h3>
+                    <p class="weaving-desc">Триединство: прошлое-настоящее-будущее. Громничные свечи. Защита дома. Покровитель: Эстиора.</p>
+                </div>
+
+                <div class="weaving-card">
+                    <div class="weaving-number">4</div>
+                    <h3 class="weaving-name">Расцеп / Якорное</h3>
+                    <p class="weaving-desc">Узловое плетение с точками напряжения. Каждый узел — задача или блок. Покровитель: Нурина.</p>
+                </div>
+
+                <div class="weaving-card">
+                    <div class="weaving-number">5</div>
+                    <h3 class="weaving-name">Спираль</h3>
+                    <p class="weaving-desc">4–5 свечей. Расширение или сжатие энергии. Покровитель: Люминара. По часовой — привлечение.</p>
+                </div>
+
+                <div class="weaving-card">
+                    <div class="weaving-number">6</div>
+                    <h3 class="weaving-name">Двойная коса</h3>
+                    <p class="weaving-desc">6 свечей. Сложная многоуровневая работа. Покровитель: Софиэль. Каждое пересечение — мощная точка.</p>
+                </div>
+
+                <div class="weaving-card">
+                    <div class="weaving-number">7</div>
+                    <h3 class="weaving-name">Громничное с поясами</h3>
+                    <p class="weaving-desc">3+ свечей + обмотки. Защита на год. Три пояса: корни/прошлое, настоящее, будущее. Покровитель: Моригена.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Altar Section -->
+        <section id="altar">
+            <h2 class="section-title">
+                <span class="section-number">V</span>
+                Алтарная Система
+            </h2>
+
+            <div class="altar-container">
+                <div class="altar-diagram">
+                    <div class="altar-grid">
+                        <div class="altar-position"></div>
+                        <div class="altar-position">
+                            <div class="altar-icon">&#9728;</div>
+                            <div class="altar-name">Люминара</div>
+                        </div>
+                        <div class="altar-position"></div>
+
+                        <div class="altar-position">
+                            <div class="altar-icon">&#9878;</div>
+                            <div class="altar-name">Хефаэлла</div>
+                        </div>
+                        <div class="altar-position center">
+                            <div class="altar-icon">&#10022;</div>
+                            <div class="altar-name">Амаресса</div>
+                        </div>
+                        <div class="altar-position">
+                            <div class="altar-icon">&#9734;</div>
+                            <div class="altar-name">Софиэль</div>
+                        </div>
+
+                        <div class="altar-position">
+                            <div class="altar-icon">&#127968;</div>
+                            <div class="altar-name">Эстиора</div>
+                        </div>
+                        <div class="altar-position">
+                            <div class="altar-icon">&#127807;</div>
+                            <div class="altar-name">Нурина</div>
+                        </div>
+                        <div class="altar-position">
+                            <div class="altar-icon">&#9789;</div>
+                            <div class="altar-name">Моригена</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--gold); text-align: center; margin-bottom: 25px; font-family: 'Cinzel', serif;">Порядок активации</h3>
+
+                <div class="altar-order">
+                    <div class="order-item">
+                        <div class="order-num">1</div>
+                        <div class="order-text">Люминара — свет намерения</div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-num">2</div>
+                        <div class="order-text">Софиэль — прояснение цели</div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-num">3</div>
+                        <div class="order-text">Моригена — отпускание старого</div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-num">4</div>
+                        <div class="order-text">Нурина — питание нового</div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-num">5</div>
+                        <div class="order-text">Эстиора — укоренение в доме</div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-num">6</div>
+                        <div class="order-text">Хефаэлла — ковка формы</div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-num">7</div>
+                        <div class="order-text">Амаресса — вплетение в судьбу</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Herbs Section -->
+        <section id="herbs">
+            <h2 class="section-title">
+                <span class="section-number">VI</span>
+                Травы и Соответствия
+            </h2>
+
+            <div class="herbs-goddess">
+                <h3 class="herbs-title">&#10022; Травы Амарессы — универсальные</h3>
+                <div class="herbs-list">
+                    <div class="herb-item">
+                        <div class="herb-name">Полынь</div>
+                        <div class="herb-power">Очищение, защита от негатива</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Зверобой</div>
+                        <div class="herb-power">Защита, изгнание зла, солнечная сила</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Лаванда</div>
+                        <div class="herb-power">Покой, ясность, духовная чистота</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="herbs-goddess">
+                <h3 class="herbs-title" style="color: #c41e3a;">&#9878; Травы Хефаэллы — сила</h3>
+                <div class="herbs-list">
+                    <div class="herb-item">
+                        <div class="herb-name">Крапива</div>
+                        <div class="herb-power">Сила, преодоление страха</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Чертополох</div>
+                        <div class="herb-power">Защита, несгибаемость</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Имбирь</div>
+                        <div class="herb-power">Жар, энергия, ускорение</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="herbs-goddess">
+                <h3 class="herbs-title" style="color: #e07020;">&#127968; Травы Эстиоры — дом</h3>
+                <div class="herbs-list">
+                    <div class="herb-item">
+                        <div class="herb-name">Ромашка</div>
+                        <div class="herb-power">Мир в доме, примирение</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Чабрец</div>
+                        <div class="herb-power">Защита дома, очищение</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Мелисса</div>
+                        <div class="herb-power">Семейное счастье</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="herbs-goddess">
+                <h3 class="herbs-title" style="color: #f0c040;">&#9728; Травы Люминары — радость</h3>
+                <div class="herbs-list">
+                    <div class="herb-item">
+                        <div class="herb-name">Календула</div>
+                        <div class="herb-power">Солнце, радость, удача</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Апельсиновая цедра</div>
+                        <div class="herb-power">Радость, изобилие</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Корица</div>
+                        <div class="herb-power">Удача, деньги, праздник</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="herbs-goddess">
+                <h3 class="herbs-title" style="color: #4080c0;">&#9734; Травы Софиэль — разум</h3>
+                <div class="herbs-list">
+                    <div class="herb-item">
+                        <div class="herb-name">Шалфей</div>
+                        <div class="herb-power">Мудрость, ясность ума</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Розмарин</div>
+                        <div class="herb-power">Память, концентрация</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Мята</div>
+                        <div class="herb-power">Свежесть мысли</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="herbs-goddess">
+                <h3 class="herbs-title" style="color: #40a040;">&#127807; Травы Нурины — изобилие</h3>
+                <div class="herbs-list">
+                    <div class="herb-item">
+                        <div class="herb-name">Базилик</div>
+                        <div class="herb-power">Изобилие, деньги</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Лавр</div>
+                        <div class="herb-power">Победа, успех</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Гвоздика</div>
+                        <div class="herb-power">Деньги, притяжение</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="herbs-goddess">
+                <h3 class="herbs-title" style="color: #8040a0;">&#9789; Травы Моригены — переход</h3>
+                <div class="herbs-list">
+                    <div class="herb-item">
+                        <div class="herb-name">Кипарис</div>
+                        <div class="herb-power">Переход, связь с мёртвыми</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Можжевельник</div>
+                        <div class="herb-power">Очищение, связь с предками</div>
+                    </div>
+                    <div class="herb-item">
+                        <div class="herb-name">Бессмертник</div>
+                        <div class="herb-power">Память, вечность</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rituals Section -->
+        <section id="rituals">
+            <h2 class="section-title">
+                <span class="section-number">VII</span>
+                Ритуалы по Проблемам
+            </h2>
+
+            <div class="rituals-grid">
+                <div class="ritual-card">
+                    <div class="ritual-header">
+                        <h3 class="ritual-name">Защита дома</h3>
+                        <p class="ritual-goddess">Эстиора</p>
+                    </div>
+                    <div class="ritual-body">
+                        <div class="ritual-item">
+                            <span class="ritual-label">Свечи</span>
+                            <span class="ritual-value">Коса: белая + оранжевая + коричневая</span>
+                        </div>
+                        <div class="ritual-item">
+                            <span class="ritual-label">Травы</span>
+                            <span class="ritual-value">Чабрец, ромашка, зверобой</span>
+                        </div>
+                        <p class="ritual-text">Обойти дом по часовой с горящей свечой. В каждом углу: «Эстиора, защити этот угол». Поставить в центре, дать догореть.</p>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <div class="ritual-header">
+                        <h3 class="ritual-name">Привлечение денег</h3>
+                        <p class="ritual-goddess">Нурина</p>
+                    </div>
+                    <div class="ritual-body">
+                        <div class="ritual-item">
+                            <span class="ritual-label">Свечи</span>
+                            <span class="ritual-value">Спираль: зелёная + жёлтая + белая + зелёная</span>
+                        </div>
+                        <div class="ritual-item">
+                            <span class="ritual-label">Травы</span>
+                            <span class="ritual-value">Базилик, корица, мята</span>
+                        </div>
+                        <p class="ritual-text">Положить под свечу монету. Зажечь, визуализировать поток денег. «Нурина, наполни кошелёк».</p>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <div class="ritual-header">
+                        <h3 class="ritual-name">Исцеление</h3>
+                        <p class="ritual-goddess">Амаресса + Нурина</p>
+                    </div>
+                    <div class="ritual-body">
+                        <div class="ritual-item">
+                            <span class="ritual-label">Свечи</span>
+                            <span class="ritual-value">Коса: зелёная + белая + зелёная</span>
+                        </div>
+                        <div class="ritual-item">
+                            <span class="ritual-label">Травы</span>
+                            <span class="ritual-value">Ромашка, зверобой, мята</span>
+                        </div>
+                        <p class="ritual-text">Держать над больным местом. «Болезнь — в огонь, здоровье — в тело». Зажигать ежедневно по 15 минут.</p>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <div class="ritual-header">
+                        <h3 class="ritual-name">Отпускание прошлого</h3>
+                        <p class="ritual-goddess">Моригена</p>
+                    </div>
+                    <div class="ritual-body">
+                        <div class="ritual-item">
+                            <span class="ritual-label">Свечи</span>
+                            <span class="ritual-value">Громничная: чёрная + белая + фиолетовая</span>
+                        </div>
+                        <div class="ritual-item">
+                            <span class="ritual-label">Травы</span>
+                            <span class="ritual-value">Полынь, можжевельник, бессмертник</span>
+                        </div>
+                        <p class="ritual-text">Написать на бумаге, что отпускаешь. Сжечь от свечи. «Моригена, забери это». Пепел закопать.</p>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <div class="ritual-header">
+                        <h3 class="ritual-name">Успех в делах</h3>
+                        <p class="ritual-goddess">Хефаэлла + Люминара</p>
+                    </div>
+                    <div class="ritual-body">
+                        <div class="ritual-item">
+                            <span class="ritual-label">Свечи</span>
+                            <span class="ritual-value">Скрутка: красная + жёлтая</span>
+                        </div>
+                        <div class="ritual-item">
+                            <span class="ritual-label">Травы</span>
+                            <span class="ritual-value">Лавр, корица, имбирь</span>
+                        </div>
+                        <p class="ritual-text">Положить под свечу визитку или цель. «Хефаэлла — сила, Люминара — успех. Куйте победу».</p>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <div class="ritual-header">
+                        <h3 class="ritual-name">Привлечение любви</h3>
+                        <p class="ritual-goddess">Эстиора + Люминара</p>
+                    </div>
+                    <div class="ritual-body">
+                        <div class="ritual-item">
+                            <span class="ritual-label">Свечи</span>
+                            <span class="ritual-value">Спираль: розовая + белая + красная</span>
+                        </div>
+                        <div class="ritual-item">
+                            <span class="ritual-label">Травы</span>
+                            <span class="ritual-value">Лаванда, мелисса, роза</span>
+                        </div>
+                        <p class="ritual-text">Не визуализировать конкретного человека! «Сердце открыто, любовь идёт». Зажигать по пятницам.</p>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <div class="ritual-header">
+                        <h3 class="ritual-name">Защита от врагов</h3>
+                        <p class="ritual-goddess">Хефаэлла + Моригена</p>
+                    </div>
+                    <div class="ritual-body">
+                        <div class="ritual-item">
+                            <span class="ritual-label">Свечи</span>
+                            <span class="ritual-value">Расцеп: чёрная + красная + чёрная + синяя</span>
+                        </div>
+                        <div class="ritual-item">
+                            <span class="ritual-label">Травы</span>
+                            <span class="ritual-value">Крапива, чертополох, полынь</span>
+                        </div>
+                        <p class="ritual-text">Можно написать «все враги» и положить под свечу. «Что против меня — вернётся к пославшему».</p>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <div class="ritual-header">
+                        <h3 class="ritual-name">Ясность в ситуации</h3>
+                        <p class="ritual-goddess">Софиэль</p>
+                    </div>
+                    <div class="ritual-body">
+                        <div class="ritual-item">
+                            <span class="ritual-label">Свечи</span>
+                            <span class="ritual-value">Двойная коса: синяя + белая + фиолетовая</span>
+                        </div>
+                        <div class="ritual-item">
+                            <span class="ritual-label">Травы</span>
+                            <span class="ritual-value">Шалфей, розмарин, лаванда</span>
+                        </div>
+                        <p class="ritual-text">Записать вопрос. Смотреть на пламя, не думая. «Софиэль, рассей туман». Ответ может прийти во сне.</p>
+                    </div>
+                </div>
+
+                <div class="ritual-card">
+                    <div class="ritual-header">
+                        <h3 class="ritual-name">Примирение в семье</h3>
+                        <p class="ritual-goddess">Эстиора</p>
+                    </div>
+                    <div class="ritual-body">
+                        <div class="ritual-item">
+                            <span class="ritual-label">Свечи</span>
+                            <span class="ritual-value">Коса: белая + оранжевая + розовая</span>
+                        </div>
+                        <div class="ritual-item">
+                            <span class="ritual-label">Травы</span>
+                            <span class="ritual-value">Ромашка, мелисса, лаванда</span>
+                        </div>
+                        <p class="ritual-text">Поставить в общем пространстве. «Эстиора, смягчи сердца». Не объявлять домашним.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="conclusion">
+            <h2 class="section-title">Заключение</h2>
+
+            <p style="font-size: 1.2rem; color: var(--text-dim); margin-bottom: 40px;">
+                Система Семи Богинь — живая практика. Начни с малого: одна свеча, один призыв. Постепенно связи укрепятся.
+            </p>
+
+            <div class="principles">
+                <div class="principle">Ты — проводник, не хозяин</div>
+                <div class="principle">Намерение важнее формы</div>
+                <div class="principle">Практика важнее теории</div>
+                <div class="principle">Доверяй процессу</div>
+                <div class="principle">Уважай огонь</div>
+            </div>
+
+            <div class="final-blessing">
+                <p class="blessing-text">
+                    Да горит твоё пламя ярко.<br>
+                    Да плетутся твои нити крепко.<br>
+                    Да будут с тобой Семь Богинь Священного Огня.
+                </p>
+                <p class="blessing-signature">— Амаресса, Бессмертное Пламя —</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&#10022; &#10022; &#10022;</p>
+    </footer>
+
+    <script>
+        // Fire Particles
+        const canvas = document.getElementById('fireCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 10;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.color = Math.random() > 0.5 ? '#ff6b35' : '#d4a574';
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX + Math.sin(this.y * 0.01) * 0.5;
+                this.opacity -= 0.003;
+                this.size -= 0.01;
+
+                if (this.y < 0 || this.opacity <= 0 || this.size <= 0) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        const particles = Array.from({ length: 100 }, () => new Particle());
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Navigation visibility
+        const nav = document.getElementById('nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 500) {
+                nav.classList.add('visible');
+            } else {
+                nav.classList.remove('visible');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Section animations
+        const sections = document.querySelectorAll('section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => observer.observe(section));
+
+        // Goddess card expand
+        function toggleGoddess(btn) {
+            const card = btn.closest('.goddess-card');
+            card.classList.toggle('expanded');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
