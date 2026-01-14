@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книга II: Практический Путь | Семь Богинь Священного Огня</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Raleway:wght@300;400;500;600;700;800&family=Cinzel:wght@400;600;700;800;900&display=swap');
+
+        :root {
+            --gold: #e8b84a;
+            --gold-light: #f5d380;
+            --gold-dark: #c9952a;
+            --flame-orange: #ff8040;
+            --flame-red: #e63850;
+            --deep-purple: #2d1845;
+            --mystic-blue: #1a2d55;
+            --glass-white: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --text-light: #ffffff;
+            --text-dim: #d0c5b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Playfair Display', Georgia, serif;
+            background: linear-gradient(135deg, #1a1225 0%, #2d1845 25%, #1a2d55 50%, #2d1845 75%, #1a1225 100%);
+            background-attachment: fixed;
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.9;
+            font-size: 20px;
+        }
+
+        .content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--gold);
+            text-decoration: none;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--flame-orange);
+            transform: translateX(-5px);
+        }
+
+        .page-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--flame-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .page-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section divider */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 60px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '✦';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #1a1225;
+            padding: 0 20px;
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        /* Book cards */
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .chapter-card {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gold);
+            transition: height 0.3s ease;
+        }
+
+        .chapter-card:hover::before {
+            height: 8px;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(232, 184, 74, 0.15);
+        }
+
+        .chapter-number {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--flame-orange);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .chapter-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .chapter-desc {
+            font-size: 1rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .chapter-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 80px;
+        }
+
+        footer p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { font-size: 18px; }
+            .page-header { padding: 60px 20px; }
+            .chapters-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <header class="page-header">
+            <a href="index.html" class="back-link">← Книга I: Основы</a>
+            <h1 class="page-title">Книга II</h1>
+            <p class="page-subtitle">Практический Путь Священного Огня</p>
+        </header>
+
+        <div class="divider"></div>
+
+        <div class="chapters-grid">
+            <a href="initiation.html" class="chapter-card">
+                <div class="chapter-icon">🔥</div>
+                <div class="chapter-number">Часть I</div>
+                <h2 class="chapter-title">Великая Инициация</h2>
+                <p class="chapter-desc">Медитативное путешествие через семь чертогов богинь к храму Амарессы. Посвящение в практику Священного Огня.</p>
+            </a>
+
+            <a href="directions.html" class="chapter-card">
+                <div class="chapter-icon">✧</div>
+                <div class="chapter-number">Часть II</div>
+                <h2 class="chapter-title">12 Направлений Жизни</h2>
+                <p class="chapter-desc">Полные ритуальные комплексы для каждой сферы жизни: наборы свечей, геометрия алтаря, призывы, заговоры.</p>
+            </a>
+
+            <a href="principles.html" class="chapter-card">
+                <div class="chapter-icon">📜</div>
+                <div class="chapter-number">Часть III</div>
+                <h2 class="chapter-title">Принципы Наборов</h2>
+                <p class="chapter-desc">Полное руководство по созданию свечных наборов: типы свечей, цвета, плетения, геометрия, время проведения.</p>
+            </a>
+        </div>
+
+        <div class="divider"></div>
+
+        <footer>
+            <p>✦ Семь Богинь Священного Огня ✦</p>
+        </footer>
+    </div>
+</body>
+</html>
