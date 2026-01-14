@@ -298,6 +298,86 @@
             font-size: 0.9rem;
         }
 
+        /* Navigation Panel */
+        .nav-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 18, 37, 0.97);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .nav-panel.visible { transform: translateY(0); }
+
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 30px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .nav-toggle-global {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-dim);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle-global:hover { border-color: var(--gold); color: var(--gold); }
+        .nav-toggle-global.active { background: var(--gold); color: #1a1225; border-color: var(--gold); }
+
+        .nav-local, .nav-global {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 15px 20px;
+        }
+
+        .nav-global { display: none; }
+        .nav-global.active { display: flex; }
+        .nav-local.hidden { display: none; }
+
+        .nav-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            white-space: nowrap;
+        }
+
+        .nav-link:hover { color: var(--gold); background: rgba(232, 184, 74, 0.15); }
+        .nav-link.current { color: var(--flame-orange); background: rgba(255, 128, 64, 0.15); }
+
+        .nav-global .nav-link {
+            font-size: 0.85rem;
+            padding: 10px 16px;
+        }
+
         /* Mobile Menu Button */
         .menu-toggle {
             display: none;
@@ -329,41 +409,6 @@
         .menu-toggle.active span:nth-child(2) { opacity: 0; }
         .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            background: rgba(26, 18, 37, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            z-index: 1000;
-            transform: translateY(-100%);
-            transition: transform 0.5s ease;
-        }
-
-        .nav.visible { transform: translateY(0); }
-
-        .nav-link {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-family: 'Raleway', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            padding: 10px 5px;
-        }
-
-        .nav-link:hover { color: var(--gold); }
-        .nav-link.active { color: var(--flame-orange); }
-
         /* Responsive */
         @media (max-width: 768px) {
             body { font-size: 18px; }
@@ -374,23 +419,33 @@
 
             .menu-toggle { display: flex; }
 
-            .nav {
+            .nav-panel {
                 position: fixed;
                 top: 0;
                 right: 0;
                 bottom: 0;
                 left: auto;
-                width: 280px;
+                width: 300px;
                 flex-direction: column;
-                justify-content: flex-start;
-                padding: 80px 30px 30px;
-                gap: 0;
                 transform: translateX(100%);
+                overflow-y: auto;
             }
 
-            .nav.visible { transform: translateX(100%); }
-            .nav.mobile-open { transform: translateX(0); }
-            .nav-link { padding: 15px 0; border-bottom: 1px solid var(--glass-border); }
+            .nav-panel.visible { transform: translateX(100%); }
+            .nav-panel.mobile-open { transform: translateX(0); }
+
+            .nav-header { padding: 20px; }
+            .nav-local, .nav-global {
+                flex-direction: column;
+                padding: 10px 20px;
+                gap: 5px;
+            }
+
+            .nav-link {
+                padding: 12px 15px;
+                border-radius: 8px;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -402,13 +457,35 @@
         <span></span>
     </button>
 
-    <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <a href="index.html" class="nav-link">Книга I</a>
-        <a href="book2.html" class="nav-link">Книга II</a>
-        <a href="initiation.html" class="nav-link active">Инициация</a>
-        <a href="directions.html" class="nav-link">12 Направлений</a>
-        <a href="principles.html" class="nav-link">Принципы</a>
+    <!-- Navigation Panel -->
+    <nav class="nav-panel" id="navPanel">
+        <div class="nav-header">
+            <span class="nav-title">Великая Инициация</span>
+            <button class="nav-toggle-global" id="toggleGlobal">Все разделы</button>
+        </div>
+
+        <!-- Local Navigation (sections of this page) -->
+        <div class="nav-local" id="navLocal">
+            <a href="#preparation" class="nav-link">Подготовка</a>
+            <a href="#gates" class="nav-link">Врата</a>
+            <a href="#morigena" class="nav-link">Моригена</a>
+            <a href="#hefaella" class="nav-link">Хефаэлла</a>
+            <a href="#estiora" class="nav-link">Эстиора</a>
+            <a href="#nurina" class="nav-link">Нурина</a>
+            <a href="#luminara" class="nav-link">Люминара</a>
+            <a href="#sofiel" class="nav-link">Софиэль</a>
+            <a href="#amaressa" class="nav-link">Амарресса</a>
+            <a href="#return" class="nav-link">Возвращение</a>
+        </div>
+
+        <!-- Global Navigation (all books/sections) -->
+        <div class="nav-global" id="navGlobal">
+            <a href="index.html" class="nav-link">Книга I: Основы</a>
+            <a href="book2.html" class="nav-link">Книга II: Практика</a>
+            <a href="initiation.html" class="nav-link current">Инициация</a>
+            <a href="directions.html" class="nav-link">12 Направлений</a>
+            <a href="principles.html" class="nav-link">Принципы Наборов</a>
+        </div>
     </nav>
 
     <div class="scroll-progress" id="scrollProgress"></div>
@@ -1016,12 +1093,16 @@
     </div>
 
     <script>
-        // Scroll progress
+        // Elements
         const scrollProgress = document.getElementById('scrollProgress');
         const backToTop = document.getElementById('backToTop');
         const menuToggle = document.getElementById('menuToggle');
-        const nav = document.getElementById('nav');
+        const navPanel = document.getElementById('navPanel');
+        const toggleGlobal = document.getElementById('toggleGlobal');
+        const navLocal = document.getElementById('navLocal');
+        const navGlobal = document.getElementById('navGlobal');
 
+        // Scroll handling
         window.addEventListener('scroll', () => {
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = (window.pageYOffset / docHeight) * 100;
@@ -1036,11 +1117,14 @@
             // Show nav on scroll (desktop only)
             if (window.innerWidth > 768) {
                 if (window.pageYOffset > 200) {
-                    nav.classList.add('visible');
+                    navPanel.classList.add('visible');
                 } else {
-                    nav.classList.remove('visible');
+                    navPanel.classList.remove('visible');
                 }
             }
+
+            // Highlight current section
+            highlightCurrentSection();
         });
 
         backToTop.addEventListener('click', () => {
@@ -1050,18 +1134,47 @@
         // Mobile menu toggle
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
-            nav.classList.toggle('mobile-open');
-            document.body.style.overflow = nav.classList.contains('mobile-open') ? 'hidden' : '';
+            navPanel.classList.toggle('mobile-open');
+            document.body.style.overflow = navPanel.classList.contains('mobile-open') ? 'hidden' : '';
+        });
+
+        // Toggle between local and global navigation
+        toggleGlobal.addEventListener('click', () => {
+            toggleGlobal.classList.toggle('active');
+            navLocal.classList.toggle('hidden');
+            navGlobal.classList.toggle('active');
+            toggleGlobal.textContent = toggleGlobal.classList.contains('active') ? 'Этапы пути' : 'Все разделы';
         });
 
         // Close mobile menu on link click
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 menuToggle.classList.remove('active');
-                nav.classList.remove('mobile-open');
+                navPanel.classList.remove('mobile-open');
                 document.body.style.overflow = '';
             });
         });
+
+        // Highlight current section based on scroll position
+        function highlightCurrentSection() {
+            const sections = document.querySelectorAll('.chapter[id]');
+            const navLinks = navLocal.querySelectorAll('.nav-link');
+            let currentId = '';
+
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150 && rect.bottom > 150) {
+                    currentId = section.id;
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('current');
+                if (link.getAttribute('href') === '#' + currentId) {
+                    link.classList.add('current');
+                }
+            });
+        }
     </script>
 </body>
 </html>
