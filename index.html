@@ -6,7 +6,7 @@
     <title>Семь Богинь Священного Огня</title>
     <meta name="robots" content="noindex, nofollow">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Raleway:wght@300;400;500;600;700;800&family=Cinzel:wght@400;600;700;800;900&display=swap');
 
         :root {
             --gold: #d4a574;
@@ -18,8 +18,8 @@
             --mystic-blue: #0f1b3d;
             --glass-white: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.15);
-            --text-light: #e8e0d5;
-            --text-dim: #9a8f85;
+            --text-light: #f0e8dc;
+            --text-dim: #b0a090;
         }
 
         * {
@@ -33,14 +33,102 @@
         }
 
         body {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: 'Playfair Display', Georgia, serif;
             background: linear-gradient(135deg, #0a0612 0%, #1a0a2e 25%, #0f1b3d 50%, #1a0a2e 75%, #0a0612 100%);
             background-attachment: fixed;
             color: var(--text-light);
             min-height: 100vh;
             overflow-x: hidden;
-            line-height: 1.8;
-            font-size: 18px;
+            line-height: 1.9;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--flame-orange), var(--flame-red));
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--gold), var(--flame-orange));
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 40px rgba(212, 165, 116, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 50px rgba(212, 165, 116, 0.6);
+        }
+
+        .back-to-top svg {
+            width: 24px;
+            height: 24px;
+            stroke: #0a0612;
+            stroke-width: 3;
+        }
+
+        /* Mobile Menu Button */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(10, 6, 18, 0.9);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            z-index: 1001;
+            cursor: pointer;
+            backdrop-filter: blur(20px);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         /* Fire Particles Canvas */
@@ -122,15 +210,16 @@
 
         .hero-title {
             font-family: 'Cinzel', serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 700;
+            font-size: clamp(2.8rem, 9vw, 5.5rem);
+            font-weight: 800;
             background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--flame-orange) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-shadow: 0 0 60px rgba(212, 165, 116, 0.5);
             animation: titleGlow 3s ease-in-out infinite alternate;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            letter-spacing: 0.05em;
         }
 
         @keyframes titleGlow {
@@ -139,20 +228,23 @@
         }
 
         .hero-subtitle {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-family: 'Raleway', sans-serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            font-weight: 600;
             color: var(--gold);
-            letter-spacing: 0.3em;
-            margin-bottom: 30px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            margin-bottom: 35px;
             opacity: 0;
             animation: fadeInUp 1s ease-out 0.5s forwards;
         }
 
         .hero-stars {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--gold);
-            margin: 30px 0;
+            margin: 35px 0;
             animation: starPulse 2s ease-in-out infinite;
+            letter-spacing: 0.5em;
         }
 
         @keyframes starPulse {
@@ -161,10 +253,11 @@
         }
 
         .hero-description {
-            max-width: 800px;
-            font-size: 1.3rem;
+            max-width: 850px;
+            font-size: 1.4rem;
+            font-weight: 500;
             color: var(--text-dim);
-            line-height: 2;
+            line-height: 2.1;
             opacity: 0;
             animation: fadeInUp 1s ease-out 0.8s forwards;
         }
@@ -180,21 +273,24 @@
         }
 
         .tag {
-            padding: 10px 25px;
+            padding: 12px 28px;
             background: var(--glass-white);
             border: 1px solid var(--glass-border);
             border-radius: 50px;
-            font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
             color: var(--gold-light);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            letter-spacing: 0.05em;
         }
 
         .tag:hover {
             background: rgba(212, 165, 116, 0.2);
             border-color: var(--gold);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(212, 165, 116, 0.25);
         }
 
         @keyframes fadeInUp {
@@ -252,8 +348,8 @@
             padding: 20px 40px;
             display: flex;
             justify-content: center;
-            gap: 30px;
-            background: rgba(10, 6, 18, 0.8);
+            gap: 35px;
+            background: rgba(10, 6, 18, 0.9);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
             z-index: 1000;
@@ -268,22 +364,26 @@
         .nav-link {
             color: var(--text-dim);
             text-decoration: none;
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
             transition: all 0.3s ease;
             position: relative;
+            padding: 10px 5px;
         }
 
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
-            height: 2px;
+            height: 3px;
             background: linear-gradient(90deg, var(--gold), var(--flame-orange));
             transition: width 0.3s ease;
+            border-radius: 2px;
         }
 
         .nav-link:hover {
@@ -294,9 +394,30 @@
             width: 100%;
         }
 
+        /* Section Divider */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 80px 0;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: '✦';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--deep-purple);
+            padding: 0 20px;
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
         /* Section Styling */
         section {
-            padding: 100px 0;
+            padding: 120px 0;
             opacity: 0;
             transform: translateY(50px);
             transition: all 0.8s ease-out;
@@ -309,9 +430,10 @@
 
         .section-title {
             font-family: 'Cinzel', serif;
-            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-size: clamp(2.2rem, 6vw, 3.5rem);
+            font-weight: 700;
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
             background: linear-gradient(135deg, var(--gold-light), var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -320,11 +442,13 @@
 
         .section-number {
             display: block;
-            font-size: 0.6em;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.5em;
+            font-weight: 700;
             color: var(--flame-orange);
             -webkit-text-fill-color: var(--flame-orange);
-            margin-bottom: 10px;
-            letter-spacing: 0.3em;
+            margin-bottom: 15px;
+            letter-spacing: 0.4em;
         }
 
         /* Glass Card */
@@ -407,15 +531,19 @@
 
         .goddess-name {
             font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--goddess-color, var(--gold));
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .goddess-title {
+            font-family: 'Raleway', sans-serif;
             font-size: 1rem;
+            font-weight: 500;
             color: var(--text-dim);
             font-style: italic;
+            letter-spacing: 0.05em;
         }
 
         .goddess-body {
@@ -582,17 +710,17 @@
         .colors-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
         .color-card {
             background: var(--glass-white);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 25px;
+            border-radius: 20px;
+            padding: 30px 25px;
             text-align: center;
             backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
         }
@@ -610,44 +738,57 @@
         }
 
         .color-card:hover::before {
-            opacity: 0.1;
+            opacity: 0.15;
         }
 
         .color-card:hover {
-            transform: translateY(-10px) scale(1.05);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
         }
 
         .color-swatch {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            margin: 0 auto 15px;
+            margin: 0 auto 18px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        .color-card:hover .color-swatch {
+            transform: scale(1.15);
+            box-shadow: 0 0 40px var(--card-color, var(--gold));
         }
 
         .color-name {
             font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
             position: relative;
             z-index: 1;
         }
 
         .color-power {
-            font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
             color: var(--text-dim);
             position: relative;
             z-index: 1;
         }
 
         .color-goddess {
-            font-size: 0.8rem;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
             color: var(--gold);
-            margin-top: 10px;
+            margin-top: 12px;
             position: relative;
             z-index: 1;
+            letter-spacing: 0.05em;
         }
 
         /* Weaving Section */
@@ -673,30 +814,34 @@
         }
 
         .weaving-number {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             background: linear-gradient(135deg, var(--gold), var(--flame-orange));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 800;
             color: #0a0612;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.3);
         }
 
         .weaving-name {
             font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--gold-light);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .weaving-desc {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
             color: var(--text-dim);
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
         /* Herbs Section */
@@ -706,24 +851,25 @@
 
         .herbs-title {
             font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--gold);
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 22px;
+            padding-bottom: 18px;
             border-bottom: 1px solid var(--glass-border);
         }
 
         .herbs-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 18px;
         }
 
         .herb-item {
             background: var(--glass-white);
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 15px 25px;
+            border-radius: 14px;
+            padding: 18px 28px;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
@@ -732,16 +878,21 @@
             background: rgba(212, 165, 116, 0.15);
             border-color: var(--gold);
             transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
         .herb-name {
-            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
             color: var(--gold-light);
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .herb-power {
-            font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
             color: var(--text-dim);
         }
 
@@ -774,14 +925,18 @@
 
         .ritual-name {
             font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--gold);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .ritual-goddess {
-            font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
             color: var(--flame-orange);
+            letter-spacing: 0.05em;
         }
 
         .ritual-body {
@@ -925,15 +1080,18 @@
         }
 
         .principle {
-            padding: 20px 0;
+            padding: 22px 0;
             border-bottom: 1px solid var(--glass-border);
-            font-size: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
             color: var(--text-dim);
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .principle:hover {
             color: var(--gold);
+            transform: translateX(10px);
         }
 
         .principle:last-child {
@@ -941,26 +1099,30 @@
         }
 
         .final-blessing {
-            margin-top: 60px;
-            padding: 40px;
+            margin-top: 70px;
+            padding: 50px;
             background: var(--glass-white);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            border-radius: 28px;
             backdrop-filter: blur(20px);
         }
 
         .blessing-text {
-            font-size: 1.3rem;
-            line-height: 2.2;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 2.3;
             color: var(--gold-light);
             font-style: italic;
         }
 
         .blessing-signature {
-            margin-top: 30px;
+            margin-top: 35px;
             font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
             color: var(--flame-orange);
+            letter-spacing: 0.1em;
         }
 
         /* Footer */
@@ -977,11 +1139,60 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            body {
+                font-size: 18px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+        }
+
         @media (max-width: 768px) {
+            body {
+                font-size: 17px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
             .nav {
-                flex-wrap: wrap;
-                padding: 15px 20px;
-                gap: 15px;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding: 100px 40px 40px;
+                gap: 0;
+                transform: translateX(100%);
+                justify-content: flex-start;
+                align-items: stretch;
+            }
+
+            .nav.visible {
+                transform: translateX(100%);
+            }
+
+            .nav.mobile-open {
+                transform: translateX(0);
+            }
+
+            .nav-link {
+                padding: 20px 0;
+                font-size: 1.2rem;
+                border-bottom: 1px solid var(--glass-border);
+                text-align: center;
+            }
+
+            .nav-link:last-child {
+                border-bottom: none;
             }
 
             .goddess-grid {
@@ -989,6 +1200,31 @@
             }
 
             .goddess-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .goddess-name {
+                font-size: 1.6rem;
+            }
+
+            .hero-tags {
+                gap: 10px;
+            }
+
+            .tag {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .colors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .weaving-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .rituals-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1001,7 +1237,73 @@
             }
 
             .altar-name {
-                font-size: 0.7rem;
+                font-size: 0.75rem;
+            }
+
+            .altar-icon {
+                font-size: 1.5rem;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .scroll-indicator {
+                display: none;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .section-title {
+                margin-bottom: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 16px;
+            }
+
+            .hero {
+                padding: 30px 15px;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+                letter-spacing: 0.2em;
+            }
+
+            .colors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .glass-card {
+                padding: 25px;
+            }
+
+            .goddess-header {
+                padding: 20px;
+            }
+
+            .goddess-body {
+                padding: 20px;
+            }
+
+            .details-content {
+                padding: 20px;
+            }
+
+            .herb-item {
+                padding: 12px 18px;
             }
         }
 
@@ -1031,6 +1333,23 @@
     </style>
 </head>
 <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Меню">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Наверх">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
     <!-- Background Orbs -->
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
@@ -2156,18 +2475,57 @@
 
         // Navigation visibility
         const nav = document.getElementById('nav');
+        const scrollProgress = document.getElementById('scrollProgress');
+        const backToTop = document.getElementById('backToTop');
+        const menuToggle = document.getElementById('menuToggle');
         let lastScroll = 0;
 
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (currentScroll / docHeight) * 100;
 
-            if (currentScroll > 500) {
-                nav.classList.add('visible');
+            // Scroll progress bar
+            scrollProgress.style.width = scrollPercent + '%';
+
+            // Back to top button
+            if (currentScroll > 600) {
+                backToTop.classList.add('visible');
             } else {
-                nav.classList.remove('visible');
+                backToTop.classList.remove('visible');
+            }
+
+            // Navigation visibility (desktop only)
+            if (window.innerWidth > 768) {
+                if (currentScroll > 500) {
+                    nav.classList.add('visible');
+                } else {
+                    nav.classList.remove('visible');
+                }
             }
 
             lastScroll = currentScroll;
+        });
+
+        // Back to top click
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Mobile menu toggle
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            nav.classList.toggle('mobile-open');
+            document.body.style.overflow = nav.classList.contains('mobile-open') ? 'hidden' : '';
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                nav.classList.remove('mobile-open');
+                document.body.style.overflow = '';
+            });
         });
 
         // Section animations
